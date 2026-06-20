@@ -1,0 +1,38 @@
+{
+  "name": "signaling-server",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/signaling-server/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/signaling-server",
+        "main": "apps/signaling-server/src/main.ts",
+        "tsConfig": "apps/signaling-server/tsconfig.app.json",
+        "assets": []
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "signaling-server:build",
+        "watch": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "signaling-server:build"
+        },
+        "production": {
+          "buildTarget": "signaling-server:build"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

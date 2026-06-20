@@ -1,0 +1,31 @@
+services:
+  signaling-server:
+    build:
+      context: .
+      dockerfile: apps/signaling-server/Dockerfile
+    ports:
+      - '8080:8080'
+    environment:
+      PORT: 8080
+
+  client-1:
+    build:
+      context: .
+      dockerfile: apps/client-1/Dockerfile
+      args:
+        VITE_SIGNALING_SERVER_URL: http://localhost:8080
+    ports:
+      - '3000:3000'
+    depends_on:
+      - signaling-server
+
+  client-2:
+    build:
+      context: .
+      dockerfile: apps/client-2/Dockerfile
+      args:
+        VITE_SIGNALING_SERVER_URL: http://localhost:8080
+    ports:
+      - '3001:3001'
+    depends_on:
+      - signaling-server
